@@ -23,11 +23,72 @@
                     </tr>
             </div>
             <br>
-            <h1 style="text-align: center">{!{WO#}!} @Model.WO.Number</h1>
+            <u>
+                <h1 style="text-align: center">{!{WO#}!} @Model.WO.Number</h1>
+            </u>
         </div>
     </section>
     <section>
-       <p>Did that break it</p>
+        <h2 style="color:rgb(89, 116, 44)"> VENDOR INFORMATION</h2>
+        <table>
+            <tr>
+                <td style="width: 70%">
+                    @if (Model.WO.AssignedTo != null)
+                    {
+                    <address>
+                        @Model.WO.AssignedTo.DisplayAs<br />
+                        @Model.WO.AssignedTo.Address.Multiline
+                        <br />
+                    </address>
+
+                    <table>
+                        <colgroup>
+                            <col style="width: 30%">
+                            <col style="width: 70%">
+                        </colgroup>
+                        @if (!string.IsNullOrEmpty(Model.WO.AssignedTo.Number))
+                        {
+                        <tr>
+                            <td>
+                                <strong class="nowrap">{!{Provider}!} Number</strong>
+                            </td>
+                            <td>@Model.WO.AssignedTo.Number</td>
+                        </tr>
+                        }
+                        @if (!string.IsNullOrEmpty(Model.WO.AssignedTo.Phone))
+                        {
+                        <tr>
+                            <td>
+                                <strong class="nowrap">Phone</strong>
+                            </td>
+                            <td>@Model.WO.AssignedTo.Phone</td>
+                        </tr>
+                        }
+                        @if (Model.WO.AssignedTo.Emails.Any())
+                        {
+                        <tr>
+                            <td>
+                                <strong class="nowrap">Email</strong>
+                            </td>
+                            <td>
+                                @foreach(var email in Model.WO.AssignedTo.Emails)
+                                {
+                                <div>@email</div>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </table>
+                    }
+                </td>
+                <td style="width: 30%" class="text-right">
+                    @if (Model.WO.AssignedTo != null && Model.WO.AssignedTo.Avatar != null)
+                    {
+                    <img class="logo" src="@Model.WO.AssignedTo.Avatar" />
+                    }
+                </td>
+            </tr>
+        </table>
     </section>
     <section>
         <table>
@@ -149,7 +210,42 @@
                 @item.Task @item.Description @item.Disposition
             </li>
             }
-            <h3 style="color: red"> DO NOT EXCEED NTE WITHOUT APPROVAL FROM EGT ENTERPRISE AS THE CUSTOMER WILL NOT PAY</h3>
+            <h4 style="color: red"> DO NOT EXCEED NTE WITHOUT APPROVAL FROM EGT ENTERPRISE AS THE CUSTOMER WILL NOT PAY</h4>
         </ul>
+    </section>
+
+    <section>
+        <div>
+            <strong>
+                <h1 style="text-align: center">TO RECEIVE PAYMENT YOU MUST HAVE THE FOLLOWING:</h1>
+            </strong>
+            <br>
+            <h3>CURRENT INSURANCE CERTIFICATION</h3>
+            <li>Egt Enterprise must be listed a certificate holder.</li>
+            <li>Egt Enterprise must be listed as additionally insured.</li>
+            <h3>W-9 CERTIFICATE</h3>
+            <li> Must be received before work begins.</li>
+            <h3>COMPLETED FIELD WORK ORDER FORM</h3>
+            <li> Egt field work form must be submitted with you invoice.</li>
+            <li> Store manager / representative must sign the form.</li>
+            <li>Clock in and out time is required.</li>
+            <h3>INVOICE</h3>
+            <li>Must state that taxes are PAID IN FULL.</li>
+            <li> Invoices must be sent directly to AP@EGTENTERPRISE.COM .</li>
+            <li> Must be split into line items for time and material.</li>
+            <h3>PICTURES</h3>
+            <li>Completion photos are required for all work, and must be attached to the invoice.</li>
+            <h3> *** FIELD CONDUCT*** VERY IMPORTANT</h3>
+            <li>When serving this request you are considered a representative of EGT Enterprise INC.
+            <li><i>Please introduce yourself as “with EGT Enterprise.”</i></li>
+            </li>
+            <li>Store employees have NO AUTHORITY to approve additional or change work in the description of the Work
+                Order.</li>
+            <li>ANY extra duties performed or changed will not be paid and may result in suspension or cancellation of
+                payment for services rendered.</li>
+            <li> Store employees should not be shown any documents for which pricing for work is listed.</li>
+            <br>
+            <br>
+        </div>
     </section>
 </div>
