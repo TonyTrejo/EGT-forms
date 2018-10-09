@@ -1,0 +1,399 @@
+<div class="printout">
+	
+	
+	<section>
+		<table>
+			<tr>
+				<td style="width: 70%">
+					<img class="logo" src="@Model.Company.Logo"></img> 
+				</td>
+				<td style="width: 30%">
+                             
+					@if (Model.WO.Property != null)
+					{
+						<address>
+							@Model.WO.Property.Organization<br />
+							@Model.WO.Property.Name<br />
+							@Model.WO.Property.Address.Multiline
+						</address>
+					}
+                        
+				</td>
+			</tr>
+		</table>
+	</section>
+	<section>
+	
+	
+	
+	
+	
+
+		<table>
+			<colgroup>
+				<col style="width: 30%">
+				<col style="width: 40%">
+				<col style="width: 30%">
+			</colgroup>
+			<tr>
+				<td >
+					<h3>Due by @Model.WO.DueBy</h3>
+				</td>
+				<td class="text-center" >
+					<h3 class="@(Model.WO.Priority.IsEmergency ? "alert" : "")">@Model.WO.Priority</h3>
+				</td>
+				<td class="text-right">
+					<h3>{!{WO#}!} @Model.WO.Number</h3>
+				</td>
+			</tr>
+			<tr>
+				<td >
+					<h3>Not to exceed @Model.WO.NotToExceed</h3>
+				</td>
+				<td  class="text-center">
+					@if (Model.WO.Flag.HasValue)
+					{
+						<h3>Flagged: @Model.WO.Flag</h3>
+					}
+				</td>
+				<td class="text-right">
+					<h3>Status @Model.WO.Status</h3>
+				</td>
+			</tr>
+		</table>
+	</section>
+	<section>
+		<h2>{!{Customer}!}</h2>
+		<table>
+			<colgroup>
+				<col style="width: 15%"/>
+				<col style="width: 45%"/>
+				<col style="width: 15%"/>
+				<col style="width: 25%"/>
+			</colgroup>
+			<tr>
+				<td>
+					<strong>Name</strong>
+				</td>
+				<td>
+					@if(Model.WO.Customer != null)
+					{
+						@Model.WO.Customer.Name
+					}
+				</td>
+				<td>
+					<strong>{!{Contact}!}</strong>
+				</td>
+				<td >
+					@Model.WO.CreatorRefinement
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Address</strong>
+				</td>
+				<td rowspan="3">
+					@Model.WO.Location.Address.Multiline
+				</td>
+				<td>
+					<strong>{!{Contact At}!}</strong>
+				</td>
+				<td>
+					@Model.WO.ContactAt
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td>
+					<strong>Phone</strong>
+				</td>
+				<td>
+					@if (@Model.WO.Contact != null)
+					{
+						@Model.WO.Contact.Phone
+					}
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				
+				<td>
+					<strong>Fax</strong>
+				</td>
+				<td>
+					@if (@Model.WO.Contact != null)
+					{
+						@Model.WO.Contact.Fax
+					}
+				</td>
+			</tr>
+
+			   
+		</table>
+	</section>
+           
+            
+	<section>
+		<h2>@Model.WO.Type.Category <strong>Date created @Model.WO.TimeCreated</strong></h2>
+		<ul>
+			@foreach (var item in Model.WO.Items)
+			{
+				<li>
+					<strong>
+						@if (Model.WO.Items.Count() > 1)
+						{
+							@item.Index<text>.</text>
+						}
+						@item.Asset.Name
+					</strong> 
+					@item.Task
+					@item.Description
+					@item.Disposition
+				</li>
+			}
+		</ul>
+	</section>
+	<section>
+		<h2>Assignment</h2>
+		<table>
+			<colgroup>
+				<col style="width: 15%"/>
+				<col style="width: 45%"/>
+				<col style="width: 15%"/>
+				<col style="width: 25%"/>
+			</colgroup>
+			<tr>
+				<td class=" col-4">
+					<strong>Assigned To</strong>
+				</td>
+				<td>
+					@if (Model.WO.AssignedTo != null)
+					{
+						@Model.WO.AssignedTo.DisplayAs
+					}
+				</td>
+				<td class=" col-4">
+					<strong>{!{Specialty}!}</strong>
+				</td>
+				<td>
+					@Model.WO.Speciality</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Mobile</strong>
+				</td>
+				<td>
+					@if (Model.WO.AssignedTo != null)
+					{
+						@Model.WO.AssignedTo.Mobile
+					}
+				</td>
+				<td>
+					<strong>{!{Access}!}</strong>
+				</td>
+				<td>
+					@Model.WO.Appointment
+				</td>
+			</tr>
+			<tr>
+				<td>
+					<strong>Email</strong>
+				</td>
+				<td>
+					@if (Model.WO.AssignedTo != null)
+					{
+						@Model.WO.AssignedTo.Emails.FirstOrDefault()
+					}
+				</td>
+				
+				<td>
+					<strong>{!{Scheduled Start}!}</strong>
+				</td>
+				<td>
+					@Model.WO.ScheduleStart
+				</td>
+			</tr>
+			<tr>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					<strong>PO#</strong>
+				</td>
+				<td>
+					@Model.WO.PONumber
+				</td>
+			</tr>
+				
+
+				
+		</table>
+	</section>
+	
+   
+	@if (Model.WO.Procedures.Any())
+	{
+		<section>
+			<h2>{!{Procedures}!}</h2>
+
+			@foreach (var procedure in Model.WO.Procedures)
+			{
+
+				<h4>@procedure.Name</h4>
+
+					<table class="table">
+						<tr>
+							<th>Done</th>
+							<th class="text-left">Description</th>
+							<th class="text-left">Response</th>
+							<th class="text-left">Flag Reason</th>
+							<th class="text-left">Comments</th>
+						</tr>
+						@foreach (var step in procedure.Steps)
+						{
+							<tr class="bordered">
+								<td class="bordered" style="text-align: center; width: 5%">
+									@if (step.Done)
+									{
+										<input type="checkbox" checked="checked" />
+									}
+									else
+									{
+										<input type="checkbox" />
+									}
+								</td>
+								<td style="width: 35%" class="break-word">
+									@step.Description
+								</td>
+								<td style="width: 10%" class="break-word">
+									@step.Response
+								</td>
+								<td style="width: 25%" class="break-word">
+									@step.FlagReason
+								</td>
+								<td style="width: 25%" class="break-word">
+									@step.Comments
+								</td>
+							</tr>
+						}
+					</table>
+				}
+
+		</section>
+	}
+	
+	<section>
+		<table>
+			<tr>
+				<td style="width: 40%">
+				
+					<h2>Completion</h2>
+					<table>
+						<tr>
+							<td><strong class="nowrap">Work Completed</strong></td>
+							<td>@Model.WO.TimeCompleted</td>
+						</tr>
+						@if (Model.WO.RepairCategory != null || Model.WO.RepairCode != null)
+						{
+							<tr>
+								<td>
+									<strong class="nowrap">Repair Category/Code</strong>
+								</td>
+								<td>
+									@Model.WO.RepairCategory
+									@Model.WO.RepairCode
+								</td>
+							</tr>
+						}
+						<tr>
+							<td colspan="2" class="break-word">
+								@Model.WO.CompletionNotes
+							</td>
+                        
+						</tr>
+					</table>
+					
+				</td>
+				<td style="width: 60%">
+					
+					<h2>Required signature</h2>
+					<table>
+						<tr>
+							<td style="width: 30%">
+								<strong>Name (print)</strong>
+							</td>
+							<td class="bordered">
+								@if (@Model.WO.Signature != null)
+								{
+									@Model.WO.Signature.SignedBy
+								}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Signature</strong>
+							</td>
+							<td class="bordered">
+								@if (@Model.WO.Signature != null)
+								{
+									<img class="signature" src="@Model.WO.Signature.Image"/>
+								}
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<strong>Signed</strong>
+							</td>
+							<td class="bordered">
+								@if (@Model.WO.Signature != null)
+								{
+									@Model.WO.Signature.Date
+								}
+							</td>
+						</tr>
+					</table>
+					
+				</td>
+			</tr>
+		</table>
+	</section>
+
+	@if (Model.WO.Notes.Any())
+	{
+		<section>
+			<h2>Notes</h2>
+			<ul>
+				@foreach (var note in Model.WO.Notes.Reverse())
+				{
+					<li class="avoid-page-break">
+						@note.CreatedOn - @note.CreatedBy Wrote: @note.Contents
+					</li>
+				}
+			</ul>
+		</section>
+	}
+
+	@{
+
+		string[] images = Model.WO.Documents.Select(x => x.Image).Where(x => !string.IsNullOrEmpty(x)).ToArray();
+
+		if (images.Any())
+		{
+			<section>
+				<h2>Pictures</h2>
+				<div style="display:flex; flex-wrap:wrap; align-items: flex-start">
+					@foreach (var image in images)
+					{
+						<div style="page-break-inside: avoid;  width: 33%;padding:1px">
+							<img src="@image" style="max-height: 100%; max-width: 100%"/>
+						</div>
+					}
+				</div>
+			</section>
+		}
+	}
+
+</div>

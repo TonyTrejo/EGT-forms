@@ -1,0 +1,436 @@
+<div class="printout">
+    <section>
+        <table>
+            <tr>
+                <td style="width: 70%">
+                    @if (Model.WO.AssignedTo != null)
+                    {
+                        <address>
+                            @Model.WO.AssignedTo.DisplayAs<br/>
+                            @Model.WO.AssignedTo.Address.Multiline
+                            <br/>
+                        </address>
+    
+                        <table>
+                            <colgroup>
+                                <col style="width: 30%">
+                                <col style="width: 70%">
+                            </colgroup>
+                            @if (!string.IsNullOrEmpty(Model.WO.AssignedTo.Number))
+                            {
+                                <tr>
+                                    <td>
+                                        <strong class="nowrap">{!{Provider}!} Number</strong>
+                                    </td>
+                                    <td>@Model.WO.AssignedTo.Number</td>
+                                </tr>
+                            }
+                            @if (!string.IsNullOrEmpty(Model.WO.AssignedTo.Phone))
+                            {
+                                <tr>
+                                    <td>
+                                        <strong class="nowrap">Phone</strong>
+                                    </td>
+                                    <td>@Model.WO.AssignedTo.Phone</td>
+                                </tr>
+                            }
+                            @if (Model.WO.AssignedTo.Emails.Any())
+                            {
+                                <tr>
+                                    <td>
+                                        <strong class="nowrap">Email</strong>
+                                    </td>
+                                    <td>
+                                        @foreach(var email in Model.WO.AssignedTo.Emails)
+                                        {
+                                            <div>@email</div>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </table>
+                    }
+                </td>
+                <td style="width: 30%" class="text-right">
+                    @if (Model.WO.AssignedTo != null && Model.WO.AssignedTo.Avatar != null)
+                    {
+                        <img class="logo" src="@Model.WO.AssignedTo.Avatar"/>
+                    }
+                </td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <table>
+            <colgroup>
+                <col style="width: 30%">
+                <col style="width: 40%">
+                <col style="width: 30%">
+            </colgroup>
+            <tr>
+                <td>
+                    <h3>Invoice date @Model.WO.VendorInvoice.Date</h3>
+                </td>
+                <td class="text-center">
+                    <h3>Invoice total @Model.WO.VendorInvoice.Total</h3>
+                </td>
+                <td class="text-right">
+                    <h3>Invoice# @Model.WO.VendorInvoice.InvoiceNumber</h3>
+                </td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <h2>{!{Customer}!}</h2>
+        <table>
+            <colgroup>
+                <col style="width: 15%"/>
+                <col style="width: 45%"/>
+                <col style="width: 15%"/>
+                <col style="width: 25%"/>
+            </colgroup>
+            <tr>
+                <td>
+                    <strong>Name</strong>
+                </td>
+                <td>
+                    @if (Model.WO.Customer != null)
+                    {
+                        @Model.WO.Customer.Name
+                    }
+                </td>
+                <td>
+                    <strong>{!{Contact}!}</strong>
+                </td>
+                <td>
+                    @Model.WO.CreatorRefinement
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Address</strong>
+                </td>
+                <td rowspan="3">
+                    @Model.WO.Location.Address.Multiline
+                </td>
+                <td>
+                    <strong>{!{Contact At}!}</strong>
+                </td>
+                <td>
+                    @Model.WO.ContactAt
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <strong>Phone</strong>
+                </td>
+                <td>
+                    @if (@Model.WO.Contact != null)
+                    {
+                        @Model.WO.Contact.Phone
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <strong>Fax</strong>
+                </td>
+                <td>
+                    @if (@Model.WO.Contact != null)
+                    {
+                        @Model.WO.Contact.Fax
+                    }
+                </td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <h2>
+            <table>
+                <tr>
+                    <td style="width: 30%" class="no-padding">@Model.WO.Type.Category</td>
+                    <td style="width: 40%" class="text-center no-padding">{!{WO#}!}: @Model.WO.Number</td>
+                    <td style="width: 30%" class="text-right no-padding">Date created @Model.WO.TimeCreated</td>
+                </tr>
+            </table>
+            <strong></strong>
+        </h2>
+        <ul>
+            @foreach (var item in Model.WO.Items)
+            {
+                <li>
+                    <strong>
+                        @if (Model.WO.Items.Count() > 1)
+                        {
+                            @item.Index<text>.</text>
+                        }
+                        @item.Asset.Name
+                    </strong>
+                    @item.Task
+                    @item.Description
+                    @item.Disposition
+                </li>
+            }
+        </ul>
+    </section>
+    <section>
+        <h2>Completion</h2>
+        <table>
+            <tr>
+                <td style="width: 50%">
+    
+                    <table>
+                        <tr>
+                            <td style="width: 50%">
+                                <strong class="nowrap">Completed</strong>
+                            </td>
+                            <td>@Model.WO.TimeCompleted</td>
+    
+                        </tr>
+                        @if (Model.WO.RepairCategory != null || Model.WO.RepairCode != null)
+                        {
+                            <tr>
+                                <td>
+                                    <strong class="nowrap">Repair Category/Code</strong>
+                                </td>
+                                <td>
+                                    @Model.WO.RepairCategory
+                                    @Model.WO.RepairCode
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td colspan="2" class="break-word">
+                                @Model.WO.CompletionNotes
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+                <td>
+                    <table>
+                        @if (Model.WO.Equipment != null)
+                        {
+                            <tr>
+                                <td style="width: 50%">
+                                    <strong class="nowrap">Equipment Worked On</strong>
+                                </td>
+                                <td>
+                                    @Model.WO.Equipment.Name
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="break-word">
+                                    @Model.WO.Equipment.Comment
+                                </td>
+                            </tr>
+                        }
+                    </table>
+                </td>
+            </tr>
+        </table>
+    
+    
+    </section>
+    @if (Model.WO.Visits.Any())
+    {
+        <section>
+            <h2>Check in/out</h2>
+            <table>
+                <colgroup>
+                    <col style="width: 40%"/>
+                    <col style="width: 25%"/>
+                    <col style="width: 25%"/>
+                    <col style="width: 10%"/>
+                </colgroup>
+                <tr>
+                    <th class="text-left">By</th>
+                    <th class="text-left">Check in</th>
+                    <th class="text-left">Check out</th>
+                    <th class="text-right">Time</th>
+                </tr>
+                @foreach (var item in Model.WO.Visits)
+                {
+                    <tr>
+                        <td class="text-left break-word">
+                            @item.Employee
+                        </td>
+                        <td class="text-left">
+                            @item.CheckIn
+                        </td>
+                        <td class="text-left">
+                            @item.CheckOut
+                        </td>
+                        <td class="text-right">
+                            @item.Time
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <strong>@Model.WO.VisitsTotalTime</strong>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    }
+    <section>
+        <table>
+            <tr>
+                <td style="width: 50%">
+                    <h2>Invoice</h2>
+                    <table>
+                        <colgroup>
+                            <col style="width: 20%"></col>
+                            <col style="width: 30%"></col>
+                            <col style="width: 20%"></col>
+                            <col style="width: 30%"></col>
+                        </colgroup>
+                        <tr>
+                            <td>
+                                <strong>Status</strong>
+                            </td>
+                            <td>@Model.WO.VendorInvoice.APStatus</td>
+                            <td>
+                                <strong>Authorization#</strong>
+                            </td>
+                            <td>@Model.WO.VendorInvoice.AuthorizationNumber</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Quote</strong>
+                            </td>
+                            <td>
+                                @if (@Model.WO.Quote != null)
+                                {
+                                    @Model.WO.Quote.Status
+                                }
+                            </td>
+                            <td>
+                                <strong>Authorized By</strong>
+                            </td>
+                            <td>@Model.WO.VendorInvoice.AuthorizedBy</td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Received date</strong>
+                            </td>
+                            <td>@Model.WO.VendorInvoice.ReceivedOn</td>
+                            
+                            <td>
+                                <strong>Check#</strong>
+                            </td>
+                            <td>@Model.WO.VendorInvoice.CheckNumber</td>
+                            
+    
+    
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Expense account</strong>
+                            </td>
+                            <td>@Model.WO.ExpenseAccount</td>
+                            <td>
+                                <strong>Paid date</strong>
+                            </td>
+                            <td>@Model.WO.VendorInvoice.PaidDate</td>
+                        </tr>
+    
+                    </table>
+                </td>
+                <td style="width: 50%">
+                    <h2>Compliance</h2>
+                    <table>
+                        <colgroup>
+                            <col style="width: 50%"></col>
+                            <col style="width: 50%"></col>
+                        </colgroup>
+                        @if (@Model.WO.VerifyCompletion != null)
+                        {
+                            <tr>
+                                <td>
+                                    <strong>Verification</strong>
+                                </td>
+                                <td>
+                                    @Model.WO.VerifyCompletion.Rating
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    @Model.WO.VerifyCompletion.Comments
+                                </td>
+                            </tr>
+                        }
+                        <tr>
+                            <td>
+                                <strong>Tax Verification</strong>
+                            </td>
+                            <td>
+                                @Model.WO.VendorInvoice.TaxValidation
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Warranty</strong>
+                            </td>
+                            <td>
+                                @if (Model.WO.IsPossibleCoverWarranty)
+                                {
+                                    <text>Yes</text>
+                                }
+                                else
+                                {
+                                    <text>No</text>
+                                }
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </section>
+    @if (Model.WO.VendorInvoice.Items.Any())
+    {
+        <section>
+            <h2>Detail</h2>
+            <table>
+                <tr>
+                    <th class="text-left">Category</th>
+                    <th class="text-left">Description</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Rate</th>
+                    <th class="text-right">Amount</th>
+                </tr>
+                @foreach (var item in Model.WO.VendorInvoice.Items)
+                {
+                    <tr>
+                        <td class="text-left break-word">
+                            @item.Category
+                        </td>
+                        <td class="text-left break-word">
+                            @item.Description
+                        </td>
+                        <td class="text-right">
+                            @item.Quantity
+                        </td>
+                        <td class="text-right">
+                            @item.Rate
+                        </td>
+                        <td class="text-right">
+                            @item.Amount
+                        </td>
+                    </tr>
+                }
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <strong>Total</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>@Model.WO.VendorInvoice.Total</strong>
+                    </td>
+                </tr>
+            </table>
+        </section>
+    }
+    </div>

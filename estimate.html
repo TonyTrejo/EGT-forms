@@ -1,0 +1,218 @@
+<div class="printout">
+    <section>
+        <table>
+            <tr>
+                <td style="width: 70%">
+                    <img class="logo" src="@Model.Company.Logo"></img>
+                </td>
+                <td style="width: 30%">
+
+                    <address>
+                        EGT Enterprise Inc. (Facility Maintenance & Construction)
+                        <br/> 2030 Union St. #207
+                        <br/> San Francisco, CA 94123
+                        <br/> Phone: 415-702-7112
+                    </address>
+                </td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <style>
+        </style>
+        <table>
+            <colgroup>
+                <col style="width: 100%">
+            </colgroup>
+            <tr>
+                <td style="width: 100%" class="text-center">
+                    <p style="font-size: 25px">REPAIR ESTIMATE</p>
+                </td>
+
+
+        </table>
+        </style>
+    </section>
+    <section>
+        <section>
+            <table>
+                <colgroup>
+                    <col style="width: 30%">
+                    <col style="width: 40%">
+                    <col style="width: 30%">
+                </colgroup>
+                <tr>
+                    <td>
+                        <h3>EGT {!{WO#}!}: @Model.WO.Number</h3>
+                    </td>
+                    <td class="text-center">
+                        @foreach(var item in Model.WO.CustomFields) { if (@item.Name=="Customer WO#") {
+                        <h3> Customer WO# @item.Value</h3>
+                        } }
+
+                    </td>
+                    <td class="text-right">
+                        <h3>Date created @Model.WO.TimeCreated</h3>
+                    </td>
+
+                </tr>
+            </table>
+        </section>
+        <section>
+            <h2>{!{Customer}!}</h2>
+            <table>
+                <colgroup>
+                    <col style="width: 15%" />
+                    <col style="width: 45%" />
+                    <col style="width: 15%" />
+                    <col style="width: 25%" />
+                </colgroup>
+                <tr>
+                    <td>
+                        <strong>Customer Name</strong>
+                    </td>
+                    <td>
+                        @if (Model.WO.BillingAccount.Name != null) { @Model.WO.BillingAccount.Name }
+                    </td>
+                    <td>
+                        <strong>Customer Contact</strong>
+                    </td>
+                    <td>
+                        @Model.WO.BillingAccount.ContactDisplayAs
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Service at Name</strong>
+                    </td>
+                    <td>
+                        @if (Model.WO.Customer != null) { @Model.WO.Customer.Name }
+                    </td>
+                    <td>
+                        <strong>Service at Contact</strong>
+                    </td>
+                    <td>
+                        @Model.WO.CreatorRefinement
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <strong>Service at Address</strong>
+                    </td>
+                    <td rowspan="3">
+                        @Model.WO.Location.Address.Multiline
+                    </td>
+                    <td>
+                        <strong>Service at Phone</strong>
+                    </td>
+                    <td>
+                        @Model.WO.ContactAt
+                    </td>
+                </tr>
+
+
+            </table>
+        </section>
+        <section>
+            <h2>Requested Repairs</h2>
+            <table>
+                <tr>
+                    <td style="width: 40%" class="text-center no-padding"></td>
+                    <td style="width: 30%" class="text-right no-padding"></td>
+                </tr>
+            </table>
+            <strong></strong>
+            </h2>
+            <ul>
+                @foreach (var item in Model.WO.Items) {
+                <li>
+                    <strong>
+                        @if (Model.WO.Items.Count() > 1) { @item.Index
+                        <text>.</text>
+                        } @item.Asset.Name
+                    </strong>
+                    @item.Task @item.Description @item.Disposition
+                </li>
+                }
+            </ul>
+        </section>
+
+        @if (Model.WO.ServiceFee.Any()) {
+        <section>
+            <h2>Estimate Details</h2>
+            <table>
+                <tr>
+                    <td style="width: 100%">
+                        <strong>This estimate includes the following repairs: </strong> @Model.WO.EstimatedCost.Comment</td>
+                </tr>
+            </table>
+            <table>
+                <tr>
+                    <th class="text-left">Item</th>
+                    <th class="text-left">Description</th>
+                    <th class="text-right">Quantity</th>
+                    <th class="text-right">Rate</th>
+                    <th class="text-right">Amount</th>
+                </tr>
+                @foreach (var item in Model.WO.ServiceFee) {
+                <tr>
+                    <td class="text-left break-word">
+                        @item.Item
+                    </td>
+                    <td class="text-left break-word">
+                        @item.Description
+                    </td>
+                    <td class="text-right">
+                        @item.Quantity
+                    </td>
+                    <td class="text-right">
+                        @item.Rate
+                    </td>
+                    <td class="text-right">
+                        @item.Amount
+                    </td>
+                </tr>
+                }
+                <tr>
+                    <td class="text-right" colspan="4">
+                        <strong>Total</strong>
+                    </td>
+                    <td class="text-right">
+                        <strong>@Model.WO.ServiceFeeTotal</strong>
+                    </td>
+                </tr>
+            </table>
+        </section>
+        }
+        <section>
+            <style>
+                p.one {
+                    border-style: solid;
+                    border-color: SlateGrey;
+                    border-radius: 5px;
+                    padding: 25px 25px;
+                    text-transform: uppercase;
+                    font-size: 11px;
+                    color: black;
+                }
+            </style>
+            <table>
+                <tr>
+                    <td style="width: 100%">
+                        <p class="one">When providing you with costs we only provide you with what we understood as the scope of work you
+                            asked to be performed. When reviewing this proposal please read every detail and if there is
+                            a part that is not clear, please ask for clarification. It is possible that unforeseen challenges
+                            may occur while completing this work order, in the event they should occur additional charges
+                            will apply for labor and materials. We will warranty all work performed for 30 days. By approving
+                            this job you agree to the terms. Our estimates are good for only 30 days. Please note unless
+                            it is specifically noted within our proposal our bids do not include any costs associated with
+                            permits. Please be aware an estimate is a rough calculation, it is an approximate cost of work
+                            to be done based on our opinion. Once an estimate is approved the costs will only able to be
+                            reduced if materials are not used that were proposed all labor estimated will remain as is per
+                            the approved amount unless additional or unforeseen work is required.
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </section>
+</div>

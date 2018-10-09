@@ -1,0 +1,155 @@
+<div class="printout">
+    <section>
+        <table>
+            <tr>
+                <td style="width: 100%">
+                    <img class="logo" src="@Model.Company.Logo"></img>
+                </td>
+                <td>
+                    <h1> Service Request </h1>
+                </td>
+            </tr>
+        </table>
+        <div>
+            <div class="column">
+                <table>
+                    <tr>
+                        <address>
+                            EGT Enterprise Inc. (Facility Maintenance & Construction)
+                            <br /> 2030 Union St. #207
+                            <br /> San Francisco, CA 94123
+                            <br /> Phone: 415-702-7112
+                        </address>
+                    </tr>
+            </div>
+            <br>
+            <h1 style="text-align: center">{!{WO#}!} @Model.WO.Number</h1>
+        </div>
+    </section>
+    <section>
+       <p>Did that break it</p>
+    </section>
+    <section>
+        <table>
+            <colgroup>
+                <col style="width: 30%">
+                <col style="width: 40%">
+                <col style="width: 30%">
+            </colgroup>
+            <tr>
+                <td>
+                    <h2 style="color: red">Due by @Model.WO.DueBy</h2>
+                </td>
+                <td class="text-center">
+                    <h3 class="@(Model.WO.Priority.IsEmergency ? " alert" : "" )">@Model.WO.Priority</h3>
+                </td>
+                <td class="text-right">
+                    <h3>{!{WO#}!} @Model.WO.Number</h3>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h2 style="color: red">Not to exceed @Model.WO.NotToExceed</h2>
+                </td>
+                <td class="text-center">
+                    @if (Model.WO.Flag.HasValue)
+                    {
+                    <h3>Flagged: @Model.WO.Flag</h3>
+                    }
+                </td>
+                <td class="text-right">
+                    <h3>Status @Model.WO.Status</h3>
+                </td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <h2 style='color: blue'>{!{Customer}!}</h2>
+        <table>
+            <colgroup>
+                <col style="width: 15%" />
+                <col style="width: 45%" />
+                <col style="width: 15%" />
+                <col style="width: 25%" />
+            </colgroup>
+            <tr>
+                <td>
+                    <strong>Name</strong>
+                </td>
+                <td>
+                    @if(Model.WO.Customer != null)
+                    {
+                    @Model.WO.Customer.Name
+                    }
+                </td>
+                <td>
+                    <strong>{!{Contact}!}</strong>
+                </td>
+                <td>
+                    @Model.WO.CreatorRefinement
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Address</strong>
+                </td>
+                <td rowspan="3">
+                    @Model.WO.Location.Address.Multiline
+                </td>
+                <td>
+                    <strong>{!{Contact At}!}</strong>
+                </td>
+                <td>
+                    @Model.WO.ContactAt
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <strong>Phone</strong>
+                </td>
+                <td>
+                    @if (@Model.WO.Contact != null)
+                    {
+                    @Model.WO.Contact.Phone
+                    }
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Fax</strong>
+                </td>
+                <td>
+                    @if (@Model.WO.Contact != null)
+                    {
+                    @Model.WO.Contact.Fax
+                    }
+                </td>
+            </tr>
+        </table>
+    </section>
+    <section>
+        <h2 style="color: blue">Details</h2>
+        <table>
+            <tr>
+                <td style="width: 40%" class="text-center no-padding"></td>
+                <td style="width: 30%" class="text-right no-padding"></td>
+            </tr>
+        </table>
+        <strong></strong>
+        </h2>
+        <ul>
+            @foreach (var item in Model.WO.Items) {
+            <li>
+                <strong>
+                    @if (Model.WO.Items.Count() > 1) { @item.Index
+                    <text>.</text>
+                    } @item.Asset.Name
+                </strong>
+                @item.Task @item.Description @item.Disposition
+            </li>
+            }
+            <h3 style="color: red"> DO NOT EXCEED NTE WITHOUT APPROVAL FROM EGT ENTERPRISE AS THE CUSTOMER WILL NOT PAY</h3>
+        </ul>
+    </section>
+</div>
