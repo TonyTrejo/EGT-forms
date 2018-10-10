@@ -1,5 +1,6 @@
 <div class="printout">
     <section>
+            <h3 style="color: red; text-align: center"> Page 1 - Service Request </h3>
         <table>
             <tr>
                 <td style="width: 100%">
@@ -218,7 +219,39 @@
     <hr>
     <p style="page-break-before: always">
         <section>
-            <h2>@Model.WO.Type.Category <strong>Date created @Model.WO.TimeCreated</strong></h2>
+            <h3 style="color: red; text-align: center"> Page 2 - Work Order </h3>
+            <h1>@Model.WO.Type.Category <strong>Date created @Model.WO.TimeCreated</strong></h1>
+
+            <h2>{!{Customer}!}</h2>
+
+
+            <strong>Name</strong>
+            <p>
+                @if (Model.WO.Customer != null)
+                {
+                @Model.WO.Customer.Name
+                }</p>
+            <p>
+                @Model.WO.CreatorRefinement
+            </p>
+
+            <strong>Address</strong>
+            <p>
+                @Model.WO.Location.Address.Multiline
+            </p>
+            <strong>{!{Contact At}!}</strong>
+            <p>
+                @Model.WO.ContactAt
+            </p>
+          
+            </td>
+            <td>
+                @if (@Model.WO.Contact != null)
+                {
+                @Model.WO.Contact.Phone
+                }
+            </td>
+            </tr>
             <ul>
                 @foreach (var item in Model.WO.Items)
                 {
@@ -415,7 +448,7 @@
                             </tr>
                             <tr>
                                 <td>
-                                    <strong>Signed</strong>
+                                    <strong>Date</strong>
                                 </td>
                                 <td class="bordered">
                                     @if (@Model.WO.Signature != null)
@@ -439,7 +472,9 @@
                     operational?</p>
             </div>
         </section>
+      
         <p style="page-break-before: always">
+                <h3 style="color: red; text-align: center"> Page 3 - Billing Requirements </h3>
             <section>
                 <div>
                     <strong>
