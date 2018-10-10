@@ -317,12 +317,9 @@
         {
         <section>
             <h2>{!{Procedures}!}</h2>
-
             @foreach (var procedure in Model.WO.Procedures)
             {
-
             <h4>@procedure.Name</h4>
-
             <table class="table">
                 <tr>
                     <th>Done</th>
@@ -360,15 +357,12 @@
                 }
             </table>
             }
-
         </section>
         }
-
         <section>
             <table>
                 <tr>
                     <td style="width: 40%">
-
                         <h2>Completion</h2>
                         <table>
                             <tr>
@@ -391,13 +385,10 @@
                                 <td colspan="2" class="break-word">
                                     @Model.WO.CompletionNotes
                                 </td>
-
                             </tr>
                         </table>
-
                     </td>
                     <td style="width: 60%">
-
                         <h2>Required signature</h2>
                         <table>
                             <tr>
@@ -434,7 +425,6 @@
                                 </td>
                             </tr>
                         </table>
-
                     </td>
                 </tr>
             </table>
