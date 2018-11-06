@@ -1,0 +1,302 @@
+<div class="printout">
+    <h1 class="text-center"> Request for Invoice</h1>
+    <section>
+        <h2 style="color:red">Service Provider</h2>
+        <table>
+            <tr>
+                <td style="width: 70%">
+                    @if (Model.WO.AssignedTo != null)
+                    {
+                    <address>
+                        @Model.WO.AssignedTo.DisplayAs<br />
+                        @Model.WO.AssignedTo.Address.Multiline
+                        <br />
+                    </address>
+
+                    <table>
+                        <colgroup>
+                            <col style="width: 30%">
+                            <col style="width: 70%">
+                        </colgroup>
+                        @if (!string.IsNullOrEmpty(Model.WO.AssignedTo.Phone))
+                        {
+                        <tr>
+                            <td>
+                                <strong class="nowrap">Phone</strong>
+                            </td>
+                            <td>@Model.WO.AssignedTo.Phone</td>
+                        </tr>
+                        }
+                        @if (Model.WO.AssignedTo.Emails.Any())
+                        {
+                        <tr>
+                            <td>
+                                <strong class="nowrap">Email</strong>
+                            </td>
+                            <td>
+                                @foreach(var email in Model.WO.AssignedTo.Emails)
+                                {
+                                <div>@email</div>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </table>
+                    }
+                </td>
+            </tr>
+            <div class="column">
+
+                <table>
+                    <h2 style="color:red"> Contractor </h2>
+                    <tr>
+                        <address>
+                            EGT Enterprise Inc. (Facility Maintenance & Construction)
+                            <br /> 2030 Union St. #207
+                            <br /> San Francisco, CA 94123
+                            <br /> Phone: 415-702-7112
+                        </address>
+                    </tr>
+            </div>
+        </table>
+        <p></p>
+    </section>
+    <section>
+        <h2 style="color:red">{!{Customer}!} </h2>
+        <style>
+            #customers {
+                font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            #customers td,
+            #customers th {
+                border: 1px solid #ddd;
+                padding: 8px;
+            }
+
+            #customers tr:nth-child(even) {
+                background-color: #f2f2f2;
+            }
+
+            #customers tr:hover {
+                background-color: #ddd;
+            }
+
+            #customers th {
+                padding-top: 12px;
+                padding-bottom: 12px;
+                text-align: left;
+                background-color: #4CAF50;
+                color: white;
+            }
+        </style>
+        <table>
+            <colgroup>
+                <col style="width: 15%" />
+                <col style="width: 45%" />
+                <col style="width: 15%" />
+                <col style="width: 25%" />
+            </colgroup>
+            <tr>
+                <td>
+                    <strong>Name</strong>
+                </td>
+                <td>
+                    @if (Model.WO.Customer != null)
+                    {
+                    @Model.WO.Customer.Name
+                    }
+                </td>
+                <td>
+                    <strong>{!{Contact}!}</strong>
+                </td>
+                <td>
+                    @Model.WO.CreatorRefinement
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <strong>Address</strong>
+                </td>
+                <td rowspan="3">
+                    @Model.WO.Location.Address.Multiline
+                </td>
+                <td>
+                    <strong>{!{Contact At}!}</strong>
+                </td>
+                <td>
+                    @Model.WO.ContactAt
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <strong>Phone</strong>
+                </td>
+                <td>
+                    @if (@Model.WO.Contact != null)
+                    {
+                    @Model.WO.Contact.Phone
+                    }
+                </td>
+            </tr>
+        </table>
+        <div>
+            <br>
+            <br>
+            Dear {WO.AssignedTo},
+            <br>
+            <br>
+            Please complete the following page and submit to EGT Enterprise as your invoice as soon as possible. To
+            expedite payment please ensure that EGT Enterprise has a current copy of you Certificate of Insurance (COI)
+            and a completed Federal Tax Identification Number Certification (Form W-9). Blank copies of the Form W-9
+            will be provided by EGT Enterprise on request. Please contact your account representative with questions at
+            (877) 251-3503.
+            <br>
+            <br>
+            Thank You,<br>
+            EGT Enterprise Staff
+        </div>
+    </section>
+    <p style="page-break-before: always"></p>
+    <section>
+        <div>
+            <h1>Vendor Invoice</h1>
+            <u>
+                <h1 style="text-align: center">{!{WO#}!} @Model.WO.Number</h1>
+            </u>
+        </div>
+        <h2 style="color:red">Service Provider</h2>
+        <table>
+            <tr>
+                <td style="width: 70%">
+                    @if (Model.WO.AssignedTo != null)
+                    {
+                    <address>
+                        @Model.WO.AssignedTo.DisplayAs<br />
+                        @Model.WO.AssignedTo.Address.Multiline
+                        <br />
+                    </address>
+
+                    <table>
+                        <colgroup>
+                            <col style="width: 30%">
+                            <col style="width: 70%">
+                        </colgroup>
+                        @if (!string.IsNullOrEmpty(Model.WO.AssignedTo.Phone))
+                        {
+                        <tr>
+                            <td>
+                                <strong class="nowrap">Phone</strong>
+                            </td>
+                            <td>@Model.WO.AssignedTo.Phone</td>
+                        </tr>
+                        }
+                        @if (Model.WO.AssignedTo.Emails.Any())
+                        {
+                        <tr>
+                            <td>
+                                <strong class="nowrap">Email</strong>
+                            </td>
+                            <td>
+                                @foreach(var email in Model.WO.AssignedTo.Emails)
+                                {
+                                <div>@email</div>
+                                }
+                            </td>
+                        </tr>
+                        }
+                    </table>
+                    }
+                </td>
+            </tr>
+        </table>
+<table>
+    <colgroup>
+        <col style="width: 32%">
+        <col style="width: 36%">
+        <col style="width: 32%">
+    </colgroup>
+    <tr>
+        <td>
+            <h3>Invoice date:______________________</h3>
+        </td>
+        <td class="text-center">
+            <h3>Invoice total:______________________ </h3>
+        </td>
+        <td class="text-right">
+            <h3>Invoice#:______________________</h3>
+        </td>
+    </tr>
+</table>
+<h2>Work Description:</h2>
+<table id="customers" class="ex2" border="1">
+    <colgroup>
+        <col style="width: 20%">
+        <col style="width: 50%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+    </colgroup>
+    <tr>
+        <td>Item</td>
+        <td>Description</td>
+        <td>Quantity</td>
+        <td>Sub Total</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+<table id="customers" class="ex2" border="1">
+    <colgroup>
+        <col style="width: 20%">
+        <col style="width: 50%">
+        <col style="width: 15%">
+        <col style="width: 15%">
+    </colgroup>
+    <tr>
+        <td></td>
+        <td></td>
+        <td>Total</td>
+        <td></td>
+    </tr>
+   
+</table>
+</section>
+
+</div>
